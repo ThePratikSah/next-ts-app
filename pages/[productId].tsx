@@ -26,7 +26,9 @@ export default ProductComp;
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const response = await fetch(
-    `https://us-central1-medstore-eaba8.cloudfunctions.net/app/products/${params.productId}`
+    `https://us-central1-medstore-eaba8.cloudfunctions.net/app/products/${
+      params!.productId
+    }`
   );
   const { product }: Props = await response.json();
   return {
