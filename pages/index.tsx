@@ -1,5 +1,6 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { Props } from "../interfaces";
 
 const Home: NextPage<Props> = ({ product }) => {
@@ -15,11 +16,13 @@ const Home: NextPage<Props> = ({ product }) => {
         <div>Loading...</div>
       ) : (
         product?.map(({ id, name, price }) => (
-          <div key={id}>
-            <p>{name}</p>
-            <p>{price}</p>
-            <hr />
-          </div>
+          <Link href={`/${id}`} passHref key={id}>
+            <div>
+              <p>{name}</p>
+              <p>{price}</p>
+              <hr />
+            </div>
+          </Link>
         ))
       )}
     </div>
@@ -28,7 +31,7 @@ const Home: NextPage<Props> = ({ product }) => {
 
 export default Home;
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   const response = await fetch(
     "https://us-central1-medstore-eaba8.cloudfunctions.net/app/products"
   );
